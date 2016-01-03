@@ -58,9 +58,8 @@ class Controller
     public function actionQueue($callable, $args)
     {
         return function (Request $request, Response $response) use ($callable, $args){
-            return call_user_func($callable, $args, $this);
 
-            return $response;
+            return call_user_func($callable, $args, $this);
         };
     }
 }

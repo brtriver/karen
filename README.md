@@ -38,7 +38,7 @@ php composer.phar create-project brtriver/karen ./your_app
 Usage
 -----
 
-see `web/index.php`.
+see [web/index.php](https://github.com/brtriver/karen/blob/master/web/index.php).
 
 You have to write your logic of a controller with anonymous function:
 ```php

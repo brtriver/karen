@@ -33,7 +33,7 @@ Install
 -------
 ```bash
 php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));"
-php composer.phar create-project brtriver/karen --stability=dev ./your_app
+php composer.phar create-project brtriver/karen ./your_app
 ```
 
 Demo

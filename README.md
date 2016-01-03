@@ -12,7 +12,7 @@ This framework provide these names of blocks and simple Controller class:
 
 You have only to write a code in your way with PSR-7 objects.
 
-Karen uses blow components by default:
+Karen uses following components by default :
 
 * PSR-7 Request, Response
   * zendframework/zend-diactoros

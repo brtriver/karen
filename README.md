@@ -32,8 +32,17 @@ Requirements
 Install
 -------
 ```bash
-php composer.phar create-project brtriver/karen ./your_app
+php composer.phar create-project brtriver/karen --stability=dev ./your_app
 ```
+
+Demo
+----
+```bash
+cd your_app
+make server
+```
+
+and open `http://localhost:8888/hello/karen_girls` in your browser.
 
 Usage
 -----

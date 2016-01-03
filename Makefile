@@ -1,2 +1,2 @@
 server:
-	php \-S localhost:8888 -t ./web
+	php -S localhost:8888 -t ./web

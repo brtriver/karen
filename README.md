@@ -69,7 +69,7 @@ For example, you want to render as simple plain:
 
 ```php
 $c['controller'] = function($c) {
-	return Controller($c['request'], $['response']);
+	return new Controller($c['request'], $['response']);
 };
 ```
 

@@ -6,8 +6,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class Controller
 {
-    protected $request;
-    protected $response;
+    public $request;
+    public $response;
     protected $queue = [];
 
     public function __construct(Request $request, Response $response)

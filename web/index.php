@@ -32,9 +32,8 @@ container: {
 }
 
 middleware: {
-    $queue = [];
     // write your middleware
-    $queue['changeStatus'] = function (Request $request, Response $response, callable $next) {
+    $c['controller']->addQueue('changeStatus', function (Request $request, Response $response, callable $next) {
 
         $response = $next($request, $response);
 
@@ -44,7 +43,7 @@ middleware: {
         }
 
         return $response;
-    };
+    });
 }
 
 routes: {
@@ -73,16 +72,11 @@ response: {
         foreach ((array)$route->attributes as $key => $val) {
             $args[$key] = $val;
         }
-        // add route action to the last queue of Midlleware
-        $queue['action'] = function (Request $request, Response $response, callable $next) use ($route, $c, $args){
-            $callable = $route->handler;
-            $response = $c['controller']($callable, $args);
-
-            return $response;
-        };
-        // apply middleware
+        // add route action to the queue of Midlleware
+        $c['controller']->addQueue('action', $c['controller']->actionQueue($route->handler, $args));
+        // apply middleware and get response
         $relayBuilder = new RelayBuilder();
-        $relay = $relayBuilder->newInstance($queue);
+        $relay = $relayBuilder->newInstance($c['controller']->getQueue());
         $response = $relay($c['request'], $c['response']);
     } else {
         $response =$c['response']->withStatus(404);

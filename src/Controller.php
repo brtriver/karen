@@ -8,16 +8,12 @@ class Controller
 {
     protected $request;
     protected $response;
+    protected $queue = [];
 
     public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
         $this->response = $response;
-    }
-
-    public function __invoke($method, $args)
-    {
-        return call_user_func($method, $args, $this);
     }
 
     public function render($output)
@@ -44,5 +40,27 @@ class Controller
         if (!in_array($response->getStatusCode(), [204, 205, 304])) {
             echo $response->getBody();
         }
+    }
+
+    public function addQueue($name, callable $queue)
+    {
+        $this->queue[$name] = $queue;
+    }
+
+    public function getQueue()
+    {
+        return $this->queue;
+    }
+
+    /**
+     * get routing action queue of Middleware interface
+     */
+    public function actionQueue($callable, $args)
+    {
+        return function (Request $request, Response $response) use ($callable, $args){
+            return call_user_func($callable, $args, $this);
+
+            return $response;
+        };
     }
 }

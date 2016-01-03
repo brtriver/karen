@@ -32,24 +32,23 @@ container: {
 }
 
 middleware: {
+    $queue = [];
     // write your middleware
-    $queue['echoStatus'] = function (Request $request, Response $response, callable $next) {
+    $queue['changeStatus'] = function (Request $request, Response $response, callable $next) {
+
         $response = $next($request, $response);
 
-        $status = $request->getQueryParams()['status']?? 200;
-        $response = $response->withStatus((int)$status);
+        $status = $request->getQueryParams()['status']?? null;
+        if ($status) {
+            $response = $response->withStatus((int)$status);
+        }
 
         return $response;
     };
-    // apply middleware
-    $relayBuilder = new RelayBuilder();
-    $relay = $relayBuilder->newInstance($queue);
-    $c['response'] = $relay($c['request'], $c['response']);
 }
 
 routes: {
     // set router and controller
-
     $routerContainer = new RouterContainer();
     $map = $routerContainer->getMap();
 
@@ -74,9 +73,17 @@ response: {
         foreach ((array)$route->attributes as $key => $val) {
             $args[$key] = $val;
         }
-        // run controller
-        $callable = $route->handler;
-        $response = $c['controller']($callable, $args);
+        // add route action to the last queue of Midlleware
+        $queue['action'] = function (Request $request, Response $response, callable $next) use ($route, $c, $args){
+            $callable = $route->handler;
+            $response = $c['controller']($callable, $args);
+
+            return $response;
+        };
+        // apply middleware
+        $relayBuilder = new RelayBuilder();
+        $relay = $relayBuilder->newInstance($queue);
+        $response = $relay($c['request'], $c['response']);
     } else {
         $response =$c['response']->withStatus(404);
         $response->getBody()->write('not found');

@@ -29,6 +29,7 @@ container: {
 
         return $controller;
     };
+    $c['router'] = new RouterContainer();
 }
 
 middleware: {
@@ -48,8 +49,7 @@ middleware: {
 
 routes: {
     // set router and controller
-    $routerContainer = new RouterContainer();
-    $map = $routerContainer->getMap();
+    $map = $c['router']->getMap();
 
     // hello name controller sample.
     $map->get('hello', '/hello/{name}', function($args, $controller) {
@@ -64,7 +64,7 @@ routes: {
 }
 
 response: {
-    $matcher = $routerContainer->getMatcher();
+    $matcher = $c['router']->getMatcher();
     $route = $matcher->match($c['request']);
     if ($route) {
         // parse args

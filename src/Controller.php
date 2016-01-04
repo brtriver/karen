@@ -16,7 +16,7 @@ class Controller
         $this->response = $response;
     }
 
-    public function render(string $output)
+    public function render(string $output): Response
     {
         $this->response->getBody()->write($output);
 
@@ -47,7 +47,7 @@ class Controller
         $this->queue[$name] = $queue;
     }
 
-    public function getQueue()
+    public function getQueue(): array
     {
         return $this->queue;
     }
@@ -55,7 +55,7 @@ class Controller
     /**
      * get routing action queue of Middleware interface
      */
-    public function actionQueue(callable $callable, array $args)
+    public function actionQueue(callable $callable, array $args): callable
     {
         return function (Request $request, Response $response) use ($callable, $args){
 

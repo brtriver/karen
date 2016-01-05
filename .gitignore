@@ -1,8 +1,6 @@
 /vendor/*
 /.idea/*
 /.DS_Store
-/phpunit.phar
 /composer.phar
-/phpunit.xml
 /composer.lock
-/Gemfile.lock
+/php-cs-fixer.phar

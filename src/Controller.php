@@ -8,7 +8,6 @@ class Controller
 {
     public $request;
     public $response;
-    protected $queue = [];
 
     public function __construct(Request $request, Response $response)
     {
@@ -21,35 +20,6 @@ class Controller
         $this->response->getBody()->write($output);
 
         return $this->response;
-    }
-
-    public static function sendResponse(Response $response)
-    {
-        header(sprintf(
-            'HTTP/%s %s %s',
-            $response->getProtocolVersion(),
-            $response->getStatusCode(),
-            $response->getReasonPhrase()
-        ));
-        foreach ($response->getHeaders() as $name => $values) {
-            foreach ($values as $value) {
-                header(sprintf('%s: %s', $name, $value), false);
-            }
-        }
-
-        if (!in_array($response->getStatusCode(), [204, 205, 304])) {
-            echo $response->getBody();
-        }
-    }
-
-    public function addQueue(string $name, callable $queue)
-    {
-        $this->queue[$name] = $queue;
-    }
-
-    public function getQueue(): array
-    {
-        return $this->queue;
     }
 
     /**

@@ -85,6 +85,32 @@ $c['controller'] = function($c) {
 };
 ```
 
+Create your own framework
+-------------------------
+
+This microframework application is a simple template method pattern.
+```php
+    public function run()
+    {
+        $this->container();
+        $this->middleware();
+        $this->route();
+        $this->response();
+    }
+```
+
+and developers has only to call run like this:
+
+```php
+$app = new Application();
+$app->run();
+$app->sendResponse();
+```
+
+Within this pattern, you have only to implement your framework logic in these methods.
+For example, Karen2 is a sample microframework with FastRoute instead of Aura.Router but you have only to call same methods.
+see code `web/karen2/index.php` and `src/Framework/Karen2.php`
+
 License
 -------
 

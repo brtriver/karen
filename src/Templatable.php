@@ -10,8 +10,8 @@ trait Templatable
     }
 
     public function renderWithT($tpl, $args)
-        {
-            $output = $this->template->render($tpl, $args);
-            return $this->render($output);
-        }
+    {
+        $output = $this->template->render($tpl, $args);
+        return $this->render($output);
+    }
 }

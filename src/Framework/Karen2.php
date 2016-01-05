@@ -32,10 +32,7 @@ class Karen2 extends Application
             return $this->handlers();
         };
         $dispatcher = $this->c['dispatcher'];
-        $serverParams = $this->request->getServerParams();
-        $uri = $serverParams['REQUEST_URI'];
-        $method = $serverParams['REQUEST_METHOD'];
-        $this->route = $dispatcher->dispatch($method, $uri);
+        $this->route = $dispatcher->dispatch($this->request->getMethod(), $this->request->getUri());
     }
 
     public function response(){
@@ -49,7 +46,7 @@ class Karen2 extends Application
                 $this->addQueue('action', $this->c['controller']->actionQueue($handler, $args));
                 break;
             default:
-                echo "unknown";
+                throw new \LogicException('Should not reach this point');
         }
         // apply middleware and get response
         $relayBuilder = new RelayBuilder();

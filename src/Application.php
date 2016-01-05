@@ -27,10 +27,12 @@ abstract class Application implements ApplicationInterface
         return $this->queues;
     }
 
-    public abstract function container();
-    public function middleware(){}
-    public abstract function route();
-    public abstract function response();
+    abstract public function container();
+    public function middleware()
+    {
+    }
+    abstract public function route();
+    abstract public function response();
 
     public function run()
     {

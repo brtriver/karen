@@ -17,17 +17,18 @@ class Karen extends Application
     public function container()
     {
         $this->c = new Container();
-        $this->c['template'] = function($c) {
-            $loader = new \Twig_Loader_Filesystem( __DIR__ . '/../../templates');
+        $this->c['template'] = function ($c) {
+            $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../templates');
             return new \Twig_Environment($loader, array(
                 'cache' => '/tmp/',
             ));
         };
 
-        $this->c['controller'] = function($c) {
-            $controller = new class($this->request, $this->response) extends Controller{
-                    use Templatable;
-                };
+        $this->c['controller'] = function ($c) {
+            $controller = new class($this->request, $this->response) extends Controller
+            {
+                use Templatable;
+            };
             $controller->setTemplate($c['template']);
 
             return $controller;
@@ -53,10 +54,12 @@ class Karen extends Application
         $map = $this->c['router']->getMap();
         // define routes at an action method in an extended class
         $map = $this->action($map);
-        $this->route = $this->c['router']->getMatcher()->match($this->request);;
+        $this->route = $this->c['router']->getMatcher()->match($this->request);
+        ;
     }
 
-    public function response(){
+    public function response()
+    {
         if (!$this->route) {
             $response =$this->response->withStatus(404);
             $response->getBody()->write('not found');

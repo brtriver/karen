@@ -17,21 +17,22 @@ class Karen2 extends Application
     {
         $this->c = new Container();
         $this->c['controller'] = new Controller($this->request, $this->response);
-        $this->c['dispatcher'] = function($c) {
+        $this->c['dispatcher'] = function ($c) {
             return \FastRoute\simpleDispatcher($c['handlers']);
         };
     }
 
     public function route()
     {
-        $this->c['handlers'] = function() {
+        $this->c['handlers'] = function () {
             return $this->handlers();
         };
         $dispatcher = $this->c['dispatcher'];
         $this->route = $dispatcher->dispatch($this->request->getMethod(), $this->request->getUri()->getPath());
     }
 
-    public function response(){
+    public function response()
+    {
         switch ($this->route[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
                 echo "Not Found\n";

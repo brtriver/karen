@@ -3,6 +3,7 @@ namespace Karen;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Relay\RelayBuilder;
 
 abstract class Application implements ApplicationInterface
 {
@@ -27,7 +28,7 @@ abstract class Application implements ApplicationInterface
     }
 
     public abstract function container();
-    public abstract function middleware();
+    public function middleware(){}
     public abstract function route();
     public abstract function response();
 
@@ -37,6 +38,15 @@ abstract class Application implements ApplicationInterface
         $this->middleware();
         $this->route();
         $this->response();
+        $this->applyMiddleware();
+    }
+
+    public function applyMiddleware()
+    {
+        $relayBuilder = new RelayBuilder();
+        $relay = $relayBuilder->newInstance($this->queues);
+
+        $this->response = $relay($this->request, $this->response);
     }
 
     public function sendResponse()

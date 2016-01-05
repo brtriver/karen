@@ -4,7 +4,6 @@ namespace Karen\Framework;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Pimple\Container;
-use Relay\RelayBuilder;
 use Karen\Application;
 use Karen\Controller;
 use Karen\Templatable;
@@ -22,17 +21,14 @@ class Karen2 extends Application
             return \FastRoute\simpleDispatcher($c['handlers']);
         };
     }
-    public function middleware()
-    {
-    }
 
     public function route()
     {
-        $this->c['handlers'] = function($c) {
+        $this->c['handlers'] = function() {
             return $this->handlers();
         };
         $dispatcher = $this->c['dispatcher'];
-        $this->route = $dispatcher->dispatch($this->request->getMethod(), $this->request->getUri());
+        $this->route = $dispatcher->dispatch($this->request->getMethod(), $this->request->getUri()->getPath());
     }
 
     public function response(){
@@ -48,9 +44,5 @@ class Karen2 extends Application
             default:
                 throw new \LogicException('Should not reach this point');
         }
-        // apply middleware and get response
-        $relayBuilder = new RelayBuilder();
-        $relay = $relayBuilder->newInstance($this->getQueues());
-        $this->response = $relay($this->request, $this->response);
     }
 }

@@ -5,7 +5,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Pimple\Container;
 use Aura\Router\RouterContainer;
-use Relay\RelayBuilder;
 use Karen\Application;
 use Karen\Controller;
 use Karen\Templatable;
@@ -71,10 +70,6 @@ class Karen extends Application
         }
         // add route action to the queue of Midlleware
         $this->addQueue('action', $this->c['controller']->actionQueue($this->route->handler, $args));
-        // apply middleware and get response
-        $relayBuilder = new RelayBuilder();
-        $relay = $relayBuilder->newInstance($this->getQueues());
-        $this->response = $relay($this->request, $this->response);
     }
 
     public function action($map)

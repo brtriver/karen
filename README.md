@@ -50,12 +50,52 @@ Usage
 
 see [web/index.php](https://github.com/brtriver/karen/blob/master/web/index.php).
 
+```php
+<?php
+require __DIR__ . '/../vendor/autoload.php';
+
+$request = Zend\Diactoros\ServerRequestFactory::fromGlobals();
+$response = new Zend\Diactoros\Response();
+
+$app = new class($request, $response) extends Karen\Framework\Karen {
+        public function action($map)
+        {
+            // hello name controller sample.
+            $map->get('hello', '/hello/{name}', function($args, $controller) {
+                $name = $args['name']?? 'karen';
+                return $controller->render('[Karen] Hello, ' . $name);
+            })->tokens(['name' => '.*']);
+
+            // with twig
+            $map->get('render_with_twig', '/template/{name}', function($args, $controller) {
+                return $controller->renderWithT('demo.html', ['name' => $args['name']]);
+            });
+
+            return $map;
+        }
+    };
+
+$app->run();
+$app->sendResponse();
+```
+
 You have to write your logic of a controller with anonymous function:
 ```php
 $map->get('hello', '/hello/{name}', function($args, $controller) {
     $name = $args['name']?? 'karen';
     return $controller->render('Hello, ' . $name);
 })->tokens(['name' => '.*']);
+```
+
+If you write your application class and write logic there instead of anonymous class, it is to be a simple one:
+```php
+<?php
+$request = Zend\Diactoros\ServerRequestFactory::fromGlobals();
+$response = new Zend\Diactoros\Response();
+
+$app = new YourFramework($request, $response);
+$app->run();
+$app->sendResponse();
 ```
 
 `$args` is arguments from routing path,
@@ -65,7 +105,7 @@ and `$controller` is a instance of `Karen\Controller` class.
 
 Extends Controller
 ------------------
-For example, you want to render as simple plain:
+For example, you want to render without a template engine:
 
 ```php
 $c['controller'] = function($c) {
@@ -110,6 +150,27 @@ $app->sendResponse();
 Within this pattern, you have only to implement your framework logic in these methods.
 For example, Karen2 is a sample microframework with FastRoute instead of Aura.Router but you have only to call same methods.
 see code `web/karen2/index.php` and `src/Framework/Karen2.php`
+
+```php
+require __DIR__ . '/../../vendor/autoload.php';
+
+$request = Zend\Diactoros\ServerRequestFactory::fromGlobals();
+$response = new Zend\Diactoros\Response();
+
+$app = new class($request, $response) extends Karen\Framework\Karen2 {
+        public function handlers()
+        {
+            return function(FastRoute\RouteCollector $r) {
+                $r->addRoute('GET', '/karen2/hello/{name}', function($args, $controller){
+                    return $controller->render('[Karen2] Hello ' . $args['name']);
+                });
+            };
+        }
+    };
+
+$app->run();
+$app->sendResponse();
+```
 
 License
 -------

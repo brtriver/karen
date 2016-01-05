@@ -239,14 +239,14 @@ $app = new class extends Karen\Framework\Karen {
 
 ```
 
-If you change Aura.Route to another, read `src/Framework/Karma2.php`
+If you change Aura.Route to another, read `src/Framework/Karen2.php`
 
 ### response
 
 In response method, you have to pass your controller callable handler to  `$this->addQueue('action', $handler, $args)`.
 it is different how to get `$handler`, because it depends on your selected router library.
 
-* Aura.Router version (Karma.php)
+* Aura.Router version (Karen.php)
 ```php
     public function response(){
         if (!$this->route) {
@@ -265,7 +265,7 @@ it is different how to get `$handler`, because it depends on your selected route
     }
 ```
 
-* FastRoute version (Karma2.php)
+* FastRoute version (Karen2.php)
 ```php
     public function response(){
         switch ($this->route[0]) {
@@ -290,7 +290,7 @@ After execute this response method, queue in middleware are executed automatical
 Within this pattern, you have only to implement your framework logic in these methods.
 
 ```php
-$app = new YourApplication(); // extends Karma\Application
+$app = new YourApplication(); // extends Karen\Application
 $app->run();
 $app->sendResponse();
 ```

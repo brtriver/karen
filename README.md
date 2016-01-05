@@ -87,10 +87,7 @@ $map->get('hello', '/hello/{name}', function($args, $controller) {
 If you write your application class and write logic there instead of anonymous class, it is to be a simple one:
 ```php
 <?php
-$request = Zend\Diactoros\ServerRequestFactory::fromGlobals();
-$response = new Zend\Diactoros\Response();
-
-$app = new YourFramework($request, $response);
+$app = new YourFramework(); // YourFramework class extends Application class and implement your logic.
 $app->run();
 $app->sendResponse();
 ```

@@ -10,10 +10,10 @@ abstract class Application implements ApplicationInterface
     public $response;
     public $queues = [];
 
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request = null, Response $response = null)
     {
-        $this->request = $request;
-        $this->response = $response;
+        $this->request = ($request)?: \Zend\Diactoros\ServerRequestFactory::fromGlobals();
+        $this->response = ($response)?: new \Zend\Diactoros\Response();
     }
 
     public function addQueue(string $name, callable $callable)

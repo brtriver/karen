@@ -103,15 +103,13 @@ Extends Controller
 For example, you want to render without a template engine:
 
 ```php
-$c['controller'] = function($c) {
-	return new Controller($c['request'], $['response']);
-};
+$c['controller'] = new Controller();
 ```
 
 And if you want to use a template engine like Twig, you have only to write with anonymous class and trait:
 ```php
 $c['controller'] = function($c) {
-    $controller = new class($c['request'], $c['response']) extends Controller{
+    $controller = new class extends Controller{
             use Templatable;
         };
     $controller->setTemplate($c['template']);

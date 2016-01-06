@@ -25,7 +25,7 @@ class Karen extends Application
         };
 
         $this->c['controller'] = function ($c) {
-            $controller = new class($this->request, $this->response) extends Controller
+            $controller = new class extends Controller
             {
                 use Templatable;
             };

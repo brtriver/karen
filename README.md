@@ -285,6 +285,14 @@ it is different how to get `$handler`, because it depends on your selected route
 
 After execute this response method, queue in middleware are executed automatically.
 
+If you want to use JsonResponse:
+
+```php
+$map->get('json', '/json/{name}', function($args, $controller) {
+    return new \Zend\Diactoros\Response\JsonResponse(['name' => $args['name']]);
+});
+```
+
 ### Your Own Framework
 
 Within this pattern, you have only to implement your framework logic in these methods.

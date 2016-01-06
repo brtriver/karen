@@ -9,14 +9,11 @@ class Controller
     public $request;
     public $response;
 
-    public function __construct(Request $request, Response $response)
-    {
-        $this->request = $request;
-        $this->response = $response;
-    }
-
     public function render(string $output): Response
     {
+        if (!$this->response) {
+            throw new \RuntimeException('should call actionQueue and set response');
+        }
         $this->response->getBody()->write($output);
 
         return $this->response;
@@ -28,7 +25,8 @@ class Controller
     public function actionQueue(callable $callable, array $args): callable
     {
         return function (Request $request, Response $response) use ($callable, $args) {
-
+            $this->request = $request;
+            $this->response = $response;
             return call_user_func($callable, $args, $this);
         };
     }

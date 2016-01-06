@@ -4,3 +4,5 @@
 /composer.phar
 /composer.lock
 /php-cs-fixer.phar
+/phpunit.phar
+/phpunit.xml

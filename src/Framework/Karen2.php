@@ -16,7 +16,7 @@ class Karen2 extends Application
     public function container()
     {
         $this->c = new Container();
-        $this->c['controller'] = new Controller($this->request, $this->response);
+        $this->c['controller'] = new Controller();
         $this->c['dispatcher'] = function ($c) {
             return \FastRoute\simpleDispatcher($c['handlers']);
         };

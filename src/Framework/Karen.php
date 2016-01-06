@@ -25,7 +25,7 @@ class Karen extends Application
         };
 
         $this->c['controller'] = function ($c) {
-            $controller = new class($this->request, $this->response) extends Controller
+            $controller = new class extends Controller
             {
                 use Templatable;
             };
@@ -55,13 +55,12 @@ class Karen extends Application
         // define routes at an action method in an extended class
         $map = $this->action($map);
         $this->route = $this->c['router']->getMatcher()->match($this->request);
-        ;
     }
 
     public function response()
     {
         if (!$this->route) {
-            $response =$this->response->withStatus(404);
+            $response = $this->response->withStatus(404);
             $response->getBody()->write('not found');
             return;
         }

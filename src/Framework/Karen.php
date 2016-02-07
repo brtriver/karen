@@ -60,8 +60,8 @@ class Karen extends Application
     public function response()
     {
         if (!$this->route) {
-            $response = $this->response->withStatus(404);
-            $response->getBody()->write('not found');
+            $this->response = $this->response->withStatus(404);
+            $this->response->getBody()->write('not found');
             return;
         }
 

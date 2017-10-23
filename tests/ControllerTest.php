@@ -2,9 +2,10 @@
 namespace Brtriver\Karen\Test;
 
 use Karen\Controller;
-use PHPUnit_Framework_Assert;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Assert;
 
-class ControllerTest extends \PHPUnit_Framework_TestCase
+class ControllerTest extends TestCase
 {
     private function getController()
     {
@@ -40,9 +41,9 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 
         $controller = $this->getController();
         $f = function($args, $controller){
-            PHPUnit_Framework_Assert::assertSame(['name' => 'test'], $args);
-            PHPUnit_Framework_Assert::assertSame($this->request, $controller->request);
-            PHPUnit_Framework_Assert::assertSame($this->response, $controller->response);
+            Assert::assertSame(['name' => 'test'], $args);
+            Assert::assertSame($this->request, $controller->request);
+            Assert::assertSame($this->response, $controller->response);
         };
         $callable = $controller->actionQueue($f, ['name' => 'test']);
 

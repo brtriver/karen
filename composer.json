@@ -16,7 +16,7 @@
         "pimple/pimple": "^3.0",
         "nikic/fast-route": "^0.7.0"
     },
-	"autoload": {
+    "autoload": {
         "psr-4": {
             "Karen\\": "src/"
         }

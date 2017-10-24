@@ -4,8 +4,9 @@ namespace Brtriver\Karen\Test;
 use Karen\Application;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use PHPUnit\Framework\TestCase;
 
-class ApplicationTest extends \PHPUnit_Framework_TestCase
+class ApplicationTest extends TestCase
 {
     public function setUp()
     {

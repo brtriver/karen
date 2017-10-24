@@ -5,9 +5,9 @@ use Karen\Framework\Karen;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\UriInterface as Uri;
 use Psr\Http\Message\ResponseInterface as Response;
-use PHPUnit_Framework_Assert;
+use PHPUnit\Framework\TestCase;
 
-class KarenTest extends \PHPUnit_Framework_TestCase
+class KarenTest extends TestCase
 {
     public function setUp()
     {
